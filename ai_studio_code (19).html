@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NE GLOBAL FOUNDATION - All Assam Art Competition 2026</title>
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- jsPDF লাইব্ৰেৰী (A4 প্ৰমাণপত্ৰৰ বাবে) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .btn-card { transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .btn-card:active { transform: scale(0.94); }
+    .btn-card.active-tab { ring: 4px solid #4f46e5; transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.4); }
+    
+    .frame-gold { background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%); border: 3px solid #f59e0b; box-shadow: 0 12px 25px -5px rgba(245, 158, 11, 0.35); }
+    .frame-silver { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%); border: 3px solid #94a3b8; box-shadow: 0 12px 25px -5px rgba(148, 163, 184, 0.35); }
+    .frame-bronze { background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%); border: 3px solid #d97706; box-shadow: 0 12px 25px -5px rgba(217, 119, 6, 0.35); }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-100 via-indigo-50/40 to-slate-100 text-slate-800 font-sans antialiased select-none min-h-screen flex flex-col justify-between">
+
+  <div>
+    <!-- ================= ১. মডাৰ্ণ হেডাৰ ================= -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-indigo-100 shadow-sm">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img id="appLogo" src="https://api.dicebear.com/7.x/shapes/svg?seed=NEGlobal&backgroundColor=4f46e5" alt="Logo" class="w-11 h-11 rounded-2xl object-cover shadow-sm border border-indigo-100 p-0.5 bg-white">
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <h1 class="text-xs sm:text-base font-black text-indigo-950 tracking-tight leading-tight">NE GLOBAL FOUNDATION</h1>
+            </div>
+            <p class="text-[11px] font-bold text-amber-600">All Assam Art Competition 2026</p>
+          </div>
+        </div>
+        
+        <button onclick="switchTab('admin')" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 hover:bg-indigo-100 text-indigo-900 transition flex items-center gap-1.5 border border-indigo-200 shadow-sm">
+          <i class="fa-solid fa-lock text-indigo-600"></i>
+          <span>এডমিন</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ================= ২. চাইদিং ফটো (Image Slider) ================= -->
+    <div id="sliderSection" class="max-w-5xl mx-auto px-4 mt-3">
+      <div class="relative overflow-hidden rounded-3xl shadow-lg h-44 sm:h-64 bg-slate-900 border-2 border-white">
+        <div id="sliderContainer" class="flex transition-transform duration-700 ease-out h-full"></div>
+        <button onclick="prevSlide()" class="absolute left-2.5 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center text-xs backdrop-blur-sm">❮</button>
+        <button onclick="nextSlide()" class="absolute right-2.5 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center text-xs backdrop-blur-sm">❯</button>
+        <div id="sliderDots" class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex gap-1.5"></div>
+      </div>
+    </div>
+
+    <!-- ================= ৩. মূল ৪ টা আকৰ্ষণীয় বুটাম ================= -->
+    <div class="max-w-5xl mx-auto px-4 mt-4">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <button id="mainBtn_apply" onclick="switchTab('apply')" class="btn-card active-tab bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 text-white p-4 rounded-3xl shadow-md text-left relative overflow-hidden group">
+          <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-lg mb-2 shadow-inner">🎨</div>
+          <h3 class="font-black text-sm sm:text-base leading-tight">অনলাইন আবেদন</h3>
+          <p class="text-[11px] text-indigo-100 font-medium mt-0.5">প্ৰতিযোগিতাত ভাগ লওক</p>
+        </button>
+
+        <button id="mainBtn_gallery" onclick="switchTab('gallery')" class="btn-card bg-gradient-to-br from-rose-500 via-rose-600 to-pink-700 text-white p-4 rounded-3xl shadow-md text-left relative overflow-hidden group">
+          <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-lg mb-2 shadow-inner">🖼️</div>
+          <h3 class="font-black text-sm sm:text-base leading-tight">আৰ্ট গেলেৰী</h3>
+          <p class="text-[11px] text-rose-100 font-medium mt-0.5">সকলোৰে অংকণ চাওক</p>
+        </button>
+
+        <button id="mainBtn_winners" onclick="switchTab('winners')" class="btn-card bg-gradient-to-br from-amber-500 via-amber-600 to-yellow-600 text-white p-4 rounded-3xl shadow-md text-left relative overflow-hidden group">
+          <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-lg mb-2 shadow-inner">🏆</div>
+          <h3 class="font-black text-sm sm:text-base leading-tight">বিজয়ী প্ৰতিযোগী</h3>
+          <p class="text-[11px] text-amber-100 font-medium mt-0.5">বঁটা বিজয়ীসকলৰ তালিকা</p>
+        </button>
+
+        <button id="mainBtn_cert" onclick="switchTab('cert')" class="btn-card bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-800 text-white p-4 rounded-3xl shadow-md text-left relative overflow-hidden group">
+          <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-lg mb-2 shadow-inner">📜</div>
+          <h3 class="font-black text-sm sm:text-base leading-tight">প্ৰমাণ পত্ৰ</h3>
+          <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Certificate ডাউনল’ড</p>
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= ৪. মূল কন্টেন্ট অংশ ================= -->
+    <main class="max-w-5xl mx-auto px-4 mt-5">
+
+      <!-- ৪.১ আবেদন ফৰ্ম -->
+      <section id="section_apply" class="space-y-4">
+        <div class="bg-white/80 backdrop-blur-md border border-indigo-100 p-4 rounded-3xl shadow-sm text-xs leading-relaxed text-slate-700">
+          <div class="flex items-center gap-2 mb-1.5 text-indigo-900 font-extrabold text-sm">
+            <span class="w-7 h-7 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xs">📢</span>
+            <h3>প্ৰতিযোগিতাৰ নিয়ম আৰু নিৰ্দেশনা:</h3>
+          </div>
+          <p id="displayNotice" class="whitespace-pre-line pl-9">• ১ম শ্ৰেণীৰ পৰা ১০ম শ্ৰেণীলৈ। মাচুল: ₹১৫০ টকা। পেমেণ্ট কৰাৰ পাছত কেৱল Screenshot আপলোড কৰিলেই হ'ব। এডমিনে পৰীক্ষা কৰি Approve কৰাৰ পিছত চাৰ্টিফিকেট ডাউনল'ড কৰিব পাৰিব আৰু ছবিখন গেলেৰীত দেখা যাব।</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-sm border border-slate-200">
+          <div class="flex items-center gap-3 border-b pb-3 mb-4">
+            <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black text-lg">
+              <i class="fa-solid fa-pen-nib"></i>
+            </div>
+            <div>
+              <h2 class="text-base sm:text-lg font-black text-slate-900">ছাত্ৰ-ছাত্ৰীৰ পঞ্জীয়ন প্ৰপত্ৰ</h2>
+              <p class="text-[11px] text-slate-500">অনুগ্ৰহ কৰি তলৰ সকলো তথ্য শুদ্ধকৈ পূৰণ কৰক</p>
+            </div>
+          </div>
+
+          <form id="regForm" onsubmit="event.preventDefault(); submitRegistration();" class="space-y-4 text-xs sm:text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">ছাত্ৰ/ছাত্ৰীৰ সম্পূৰ্ণ নাম *</label>
+                <input type="text" id="std_name" placeholder="নাম লিখক" class="w-full bg-slate-50 border rounded-2xl p-2.5 outline-none focus:ring-2 focus:ring-indigo-400" required>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">বিদ্যালয়ৰ নাম *</label>
+                <input type="text" id="std_school" placeholder="বিদ্যালয়ৰ নাম" class="w-full bg-slate-50 border rounded-2xl p-2.5 outline-none focus:ring-2 focus:ring-indigo-400" required>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">শ্ৰেণী (Class) *</label>
+                <select id="std_class" class="w-full bg-slate-50 border rounded-2xl p-2.5 outline-none focus:ring-2 focus:ring-indigo-400 font-semibold">
+                  <option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option>
+                  <option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option>
+                  <option>Class 9</option><option>Class 10</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">ৰোল নম্বৰ</label>
+                <input type="text" id="std_roll" placeholder="Roll No." class="w-full bg-slate-50 border rounded-2xl p-2.5 outline-none">
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label class="block font-bold text-slate-700 mb-1">অভিভাৱকৰ নাম *</label>
+                <input type="text" id="std_guardian" placeholder="দেউতা/মাৰ নাম" class="w-full bg-slate-50 border rounded-2xl p-2.5 outline-none focus:ring-2 focus:ring-indigo-400" required>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">ঘৰৰ সম্পূৰ্ণ ঠিকনা *</label>
+              <textarea id="std_address" rows="2" placeholder="গাওঁ/চহৰ, জিলা, পিন ক’ড" class="w-full bg-slate-50 border rounded-2xl p-2.5 outline-none focus:ring-2 focus:ring-indigo-400" required></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">ফোন নম্বৰ (Calling No.) *</label>
+                <input type="tel" id="std_phone" placeholder="১০ টা সংখ্যাৰ নম্বৰ" class="w-full bg-slate-50 border rounded-2xl p-2.5 outline-none focus:ring-2 focus:ring-indigo-400" required>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">WhatsApp নম্বৰ *</label>
+                <input type="tel" id="std_whatsapp" placeholder="WhatsApp নম্বৰ" class="w-full bg-slate-50 border rounded-2xl p-2.5 outline-none focus:ring-2 focus:ring-indigo-400" required>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3 bg-slate-50 border-2 border-dashed border-indigo-200 rounded-2xl text-center">
+                <label class="block font-bold text-slate-700 mb-1 text-xs flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-camera text-indigo-600"></i> প্ৰতিযোগীৰ নিজৰ ফটো *
+                </label>
+                <p class="text-[10px] text-slate-500 mb-2">কেমেৰাৰে লাইভ ফটো তোলক বা ফাইলৰ পৰা বাছক</p>
+                <input type="file" id="std_photo" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-3 file:rounded-xl file:border-0 file:bg-indigo-600 file:text-white file:font-bold" required>
+              </div>
+              
+              <div class="p-3 bg-slate-50 border-2 border-dashed border-indigo-200 rounded-2xl text-center">
+                <label class="block font-bold text-slate-700 mb-1 text-xs flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-camera text-indigo-600"></i> অংকণ কৰা ছবিৰ ফটো *
+                </label>
+                <p class="text-[10px] text-slate-500 mb-2">ছবিখন স্পষ্টকৈ কেমেৰাৰে তোলক বা বাছক</p>
+                <input type="file" id="std_drawing" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-3 file:rounded-xl file:border-0 file:bg-indigo-600 file:text-white file:font-bold" required>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-3xl p-4 text-center">
+              <span class="bg-red-600 text-white font-black text-[11px] px-3.5 py-1 rounded-full uppercase tracking-wider shadow">অংশগ্ৰহণ মাচুল: ₹১৫০ টকা</span>
+              <p class="text-xs text-slate-600 mt-2">PhonePe, GooglePay বা Paytm যোগে তলৰ QR কোড স্কেন কৰি মাচুল দিয়ক:</p>
+              
+              <div class="my-3 flex justify-center">
+                <img id="displayQr" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=8133073604@upi&pn=NE_GLOBAL_FOUNDATION&am=150" alt="UPI QR" class="w-36 h-36 bg-white p-2 rounded-2xl border-2 border-amber-200 shadow-md object-contain">
+              </div>
+
+              <div class="max-w-md mx-auto bg-white p-3.5 rounded-2xl border border-amber-300 shadow-sm text-left">
+                <label class="block font-bold text-slate-800 mb-1 text-xs flex items-center gap-1.5">
+                  <i class="fa-solid fa-receipt text-amber-600 text-sm"></i> Payment Screenshot / ৰচিদ আপলোড কৰক *
+                </label>
+                <p class="text-[11px] text-slate-500 mb-2">পেমেণ্ট কৰাৰ পাছত ৰচিদৰ ফটো কেমেৰাৰে তোলক বা স্ক্ৰীণশ্বট বাচি লওক।</p>
+                <input type="file" id="std_payment_ss" accept="image/*" class="w-full text-xs file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-amber-600 file:text-white file:font-bold" required>
+              </div>
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-violet-700 hover:from-indigo-700 hover:to-violet-800 text-white font-black py-4 rounded-2xl shadow-xl transition flex items-center justify-center gap-2 text-sm">
+              <i class="fa-solid fa-paper-plane"></i> আবেদন নিশ্চিত কৰক (Submit Registration)
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ৪.২ আৰ্ট গেলেৰী -->
+      <section id="section_gallery" class="hidden space-y-4">
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm text-center">
+          <h2 class="text-base sm:text-lg font-black text-indigo-950 flex items-center justify-center gap-2">
+            <span>🎨</span> প্ৰতিযোগীসকলৰ কলা প্ৰদৰ্শনী (Art Gallery)
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">কেৱল এডমিনে পৰীক্ষা কৰি অনুমোদন জনোৱা প্ৰতিযোগীসকলৰ অংকণ ইয়াত প্ৰদৰ্শিত হৈছে।</p>
+        </div>
+        <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- ৪.৩ বিজয়ী প্ৰতিযোগীৰ ফটো ফ্ৰেম -->
+      <section id="section_winners" class="hidden space-y-6">
+        <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 p-6 rounded-3xl text-white text-center shadow-lg">
+          <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mx-auto text-2xl mb-2 backdrop-blur-sm">🏆</div>
+          <h2 class="text-xl font-black">বিজয়ী প্ৰতিযোগীসকল (Hall of Fame)</h2>
+          <p class="text-xs text-amber-100 mt-1">All Assam Art Competition - 2026 বঁটা বিজয়ীসকলৰ আকৰ্ষণীয় তালিকা</p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 border-b border-indigo-100 pb-2">
+            <span class="bg-indigo-600 text-white text-xs font-black px-3 py-1 rounded-full">শাখা ১</span>
+            <h3 class="font-extrabold text-sm sm:text-base text-slate-900">নিম্ন শাখা (Class 1 - Class 4)</h3>
+          </div>
+          <div id="winnersGrid_lower" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+        </div>
+
+        <div class="space-y-3 pt-3">
+          <div class="flex items-center gap-2 border-b border-indigo-100 pb-2">
+            <span class="bg-indigo-600 text-white text-xs font-black px-3 py-1 rounded-full">শাখা ২</span>
+            <h3 class="font-extrabold text-sm sm:text-base text-slate-900">মধ্য শাখা (Class 5 - Class 7)</h3>
+          </div>
+          <div id="winnersGrid_middle" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+        </div>
+
+        <div class="space-y-3 pt-3">
+          <div class="flex items-center gap-2 border-b border-indigo-100 pb-2">
+            <span class="bg-indigo-600 text-white text-xs font-black px-3 py-1 rounded-full">শাখা ৩</span>
+            <h3 class="font-extrabold text-sm sm:text-base text-slate-900">উচ্চ শাখা (Class 8 - Class 10)</h3>
+          </div>
+          <div id="winnersGrid_upper" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+        </div>
+      </section>
+
+      <!-- ৪.৪ প্ৰমাণপত্ৰ ডাউনল'ড -->
+      <section id="section_cert" class="hidden space-y-4">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-lg mx-auto text-center">
+          <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto text-2xl mb-3 shadow-inner">📜</div>
+          <h2 class="text-lg font-black text-slate-900">প্ৰমাণপত্ৰ ডাউনল’ড (Certificate Download)</h2>
+          <p class="text-xs text-slate-500 mt-1 mb-5">মন কৰিব: এডমিনৰ পৰীক্ষা আৰু অনুমোদনৰ (Verification) পাছতহে প্ৰমাণপত্ৰ ডাউনল'ড হ’ব।</p>
+
+          <div class="space-y-3 text-left">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">পঞ্জীয়নভুক্ত ফোন নম্বৰ দিয়ক:</label>
+              <input type="tel" id="certPhoneInput" placeholder="১০ টা সংখ্যাৰ ফোন নম্বৰ" class="w-full bg-slate-50 border rounded-2xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-400">
+            </div>
+            <button onclick="downloadStudentCert()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-black py-3.5 rounded-2xl shadow-lg text-sm transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-file-pdf"></i> প্ৰমাণপত্ৰ পৰীক্ষা ও ডাউনল'ড
+            </button>
+          </div>
+          <div id="certStatusMsg" class="mt-4 text-xs font-semibold hidden"></div>
+        </div>
+      </section>
+
+      <!-- ৪.৫ এডমিন পেনেল -->
+      <section id="section_admin" class="hidden space-y-5">
+        <div id="adminLoginBox" class="bg-white p-6 sm:p-8 rounded-3xl border max-w-sm mx-auto shadow-lg text-center">
+          <div class="w-14 h-14 bg-indigo-50 text-indigo-700 rounded-2xl flex items-center justify-center mx-auto text-2xl mb-3">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <h2 class="font-black text-base text-slate-800">এডমিন প্ৰৱেশ (Admin Access)</h2>
+          <p class="text-xs text-slate-500 mb-4">গোপন এডমিন পাছৱৰ্ড সুমুৱাওক</p>
+          <input type="password" id="adminPass" placeholder="••••••••••••" class="w-full border rounded-2xl p-2.5 text-center text-sm mb-3 outline-none focus:ring-2 focus:ring-indigo-500 font-mono tracking-widest">
+          <button onclick="verifyAdmin()" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-3 rounded-2xl text-xs transition shadow">প্ৰৱেশ কৰক</button>
+        </div>
+
+        <div id="adminPanelArea" class="space-y-5 hidden">
+          <div class="flex justify-between items-center bg-indigo-950 text-white p-4 rounded-3xl shadow">
+            <div>
+              <h3 class="font-bold text-sm">এডমিন নিয়ন্ত্ৰণ কক্ষ</h3>
+              <p class="text-[11px] text-indigo-200">NE GLOBAL FOUNDATION Panel</p>
+            </div>
+            <button onclick="logoutAdmin()" class="bg-red-500/80 hover:bg-red-600 text-white px-3 py-1 rounded-xl text-xs font-semibold">লগ-আউট</button>
+          </div>
+
+          <!-- ষ্টেটিষ্টিকছ -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+            <div class="bg-white p-3 rounded-2xl border shadow-sm">
+              <span class="text-[11px] font-bold text-slate-400">মুঠ আবেদন</span>
+              <p id="statTotal" class="text-lg font-black text-indigo-700">০</p>
+            </div>
+            <div class="bg-white p-3 rounded-2xl border shadow-sm">
+              <span class="text-[11px] font-bold text-amber-500">অপেক্ষমাণ</span>
+              <p id="statPending" class="text-lg font-black text-amber-600">০</p>
+            </div>
+            <div class="bg-white p-3 rounded-2xl border shadow-sm">
+              <span class="text-[11px] font-bold text-emerald-500">অনুমোদিত</span>
+              <p id="statApproved" class="text-lg font-black text-emerald-600">০</p>
+            </div>
+            <div class="bg-white p-3 rounded-2xl border shadow-sm">
+              <span class="text-[11px] font-bold text-slate-400">মুঠ মাচুল</span>
+              <p id="statFee" class="text-lg font-black text-slate-800">₹০</p>
+            </div>
+          </div>
+
+          <!-- ========================================================= -->
+          <!-- বিশেষ অংশ: প্ৰমাণপত্ৰৰ লিখনি আৰু ডিজাইন কাস্টমাইজেশ্বন স্টুডিঅ' -->
+          <!-- ========================================================= -->
+          <div class="bg-white p-5 rounded-3xl border shadow-sm space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-2 gap-2">
+              <h3 class="font-black text-sm text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-pen-fancy text-amber-600"></i> প্ৰমাণপত্ৰৰ লিখনি আৰু ডিজাইন কাস্টমাইজেশ্বন (Certificate Studio)
+              </h3>
+              <!-- নমুনা প্ৰমাণপত্ৰ পৰীক্ষা কৰাৰ বুটাম -->
+              <button onclick="previewSampleCertificate()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-3 py-1.5 rounded-xl font-bold flex items-center gap-1 shadow">
+                <i class="fa-solid fa-eye"></i> নমুনা প্ৰমাণপত্ৰ চাওক (Test Preview)
+              </button>
+            </div>
+
+            <p class="text-xs text-slate-500">আপুনি তলত দিয়া প্ৰতিটো লিখনি নিজৰ ফাউণ্ডেচনৰ প্ৰয়োজন অনুসৰি সলনি কৰিব পাৰিব:</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">১. সংস্থাৰ নাম (Organization Name):</label>
+                <input type="text" id="certInputOrg" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400">
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">২. প্ৰতিযোগিতাৰ শিৰোনাম (Event Subtitle):</label>
+                <input type="text" id="certInputSub" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400">
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">৩. প্ৰমাণপত্ৰৰ ধৰণ/শিৰোনাম (Certificate Title):</label>
+                <input type="text" id="certInputTitle" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400" placeholder="CERTIFICATE OF PARTICIPATION">
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">৪. উপস্থাপন বাক্য (Presentation Line):</label>
+                <input type="text" id="certInputPres" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400" placeholder="This certificate is proudly awarded to">
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block font-bold text-slate-700 mb-1">৫. মূল প্ৰশংসা বৰ্ণনা / বাক্য (Citation / Body Text):</label>
+                <textarea id="certInputBody" rows="2" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400" placeholder="for active participation in the state-level competition..."></textarea>
+                <p class="text-[10px] text-slate-400 mt-0.5">মন কৰিব: ছাত্ৰৰ নাম, বিদ্যালয় আৰু শ্ৰেণী ব্যৱস্থাই স্বয়ংক্ৰিয়ভাৱে এই বাক্যৰ ওপৰত বহুৱাই দিব।</p>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">৬. প্ৰমাণপত্ৰৰ তাৰিখ (Date Text):</label>
+                <input type="text" id="certInputDate" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Date: 2026">
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">৭. স্বাক্ষৰকাৰীৰ পদবী (Signatory Designation):</label>
+                <input type="text" id="certInputSignText" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Authorized Signatory, NE GLOBAL FOUNDATION">
+              </div>
+            </div>
+
+            <!-- চহী, ষ্টাম্প আৰু ল'গ' আপলোড -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2 border-t">
+              <div class="border rounded-2xl p-3 bg-slate-50 text-center">
+                <label class="block font-bold mb-1">ফাউণ্ডেচনৰ Logo:</label>
+                <img id="adminLogoPreview" class="w-12 h-12 mx-auto rounded-lg border object-cover bg-white mb-2 shadow-sm">
+                <input type="file" accept="image/*" onchange="uploadLogoFromGallery(this)" class="w-full text-[10px] file:py-1 file:px-2 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white">
+              </div>
+
+              <div class="border rounded-2xl p-3 bg-slate-50 text-center">
+                <label class="block font-bold mb-1">ডিজিটেল চহী (Signature):</label>
+                <img id="adminSignPreview" class="h-12 mx-auto border object-contain bg-white mb-2 shadow-sm rounded-lg px-2">
+                <input type="file" accept="image/*" onchange="uploadSignFromGallery(this)" class="w-full text-[10px] file:py-1 file:px-2 file:rounded file:border-0 file:bg-indigo-600 file:text-white">
+              </div>
+
+              <div class="border rounded-2xl p-3 bg-slate-50 text-center">
+                <label class="block font-bold mb-1">অফিচিয়েল ষ্টাম্প (Stamp):</label>
+                <img id="adminStampPreview" class="w-12 h-12 mx-auto border object-contain bg-white mb-2 shadow-sm rounded-full">
+                <input type="file" accept="image/*" onchange="uploadStampFromGallery(this)" class="w-full text-[10px] file:py-1 file:px-2 file:rounded file:border-0 file:bg-indigo-600 file:text-white">
+              </div>
+            </div>
+
+            <button onclick="saveCertificateContentSettings()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow transition">
+              <i class="fa-solid fa-floppy-disk mr-1"></i> প্ৰমাণপত্ৰৰ সকলো লিখনি সংৰক্ষণ কৰক (Save Certificate Details)
+            </button>
+          </div>
+
+          <!-- বিজয়ী প্ৰতিযোগীৰ তথ্য আপলোড -->
+          <div class="bg-white p-5 rounded-3xl border shadow-sm space-y-4">
+            <h3 class="font-black text-sm text-slate-800 border-b pb-2 flex items-center gap-2">
+              <i class="fa-solid fa-award text-amber-500"></i> বিজয়ী প্ৰতিযোগীৰ তথ্য আপলোড (Winners Update)
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-xs">
+              <div>
+                <label class="block font-bold mb-1">শাখা নিৰ্বাচন:</label>
+                <select id="winBranch" class="w-full border rounded-xl p-2 bg-slate-50 outline-none">
+                  <option value="lower">নিম্ন শাখা (Class 1-4)</option>
+                  <option value="middle">মধ্য শাখা (Class 5-7)</option>
+                  <option value="upper">উচ্চ শাখা (Class 8-10)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold mb-1">স্থান (Rank):</label>
+                <select id="winRank" class="w-full border rounded-xl p-2 bg-slate-50 outline-none">
+                  <option value="p1">🥇 ১ম স্থান (1st Place)</option>
+                  <option value="p2">🥈 ২য় স্থান (2nd Place)</option>
+                  <option value="p3">🥉 ৩য় স্থান (3rd Place)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold mb-1">বিজয়ীৰ নাম:</label>
+                <input type="text" id="winName" placeholder="ছাত্ৰৰ নাম" class="w-full border rounded-xl p-2 outline-none">
+              </div>
+              <div>
+                <label class="block font-bold mb-1">বিদ্যালয়ৰ নাম:</label>
+                <input type="text" id="winSchool" placeholder="বিদ্যালয়ৰ নাম" class="w-full border rounded-xl p-2 outline-none">
+              </div>
+              <div class="sm:col-span-3">
+                <label class="block font-bold mb-1">বিজয়ী ছাত্ৰৰ ফটো আপলোড কৰক:</label>
+                <input type="file" id="winPhotoFile" accept="image/*" class="w-full border rounded-xl p-1.5 text-xs bg-slate-50 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-amber-600 file:text-white">
+              </div>
+              <div class="flex items-end">
+                <button onclick="saveWinnerData()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 rounded-xl text-xs shadow">
+                  বিজয়ী ছেভ কৰক ✓
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- কাৰ্যালয়ৰ ঠিকনা, ফোন আৰু ছ’চিয়েল মিডিয়া লিংক -->
+          <div class="bg-white p-5 rounded-3xl border shadow-sm space-y-4">
+            <h3 class="font-black text-sm text-slate-800 border-b pb-2 flex items-center gap-2">
+              <i class="fa-solid fa-address-book text-indigo-600"></i> কাৰ্যালয়ৰ ঠিকনা, ফোন আৰু ছ’চিয়েল মিডিয়া লিংক
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">কাৰ্যালয়ৰ সম্পূৰ্ণ ঠিকনা:</label>
+                <textarea id="adminAddressInput" rows="2" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400"></textarea>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">যোগাযোগৰ ফোন / WhatsApp নম্বৰ:</label>
+                <input type="text" id="adminContactPhoneInput" class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1"><i class="fa-brands fa-facebook text-blue-600 mr-1"></i> Facebook পেজৰ লিংক (URL):</label>
+                <input type="text" id="adminFbInput" placeholder="https://facebook.com/..." class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1"><i class="fa-brands fa-youtube text-red-600 mr-1"></i> YouTube চেনেলৰ লিংক (URL):</label>
+                <input type="text" id="adminYtInput" placeholder="https://youtube.com/..." class="w-full border rounded-xl p-2 outline-none focus:ring-2 focus:ring-indigo-400">
+              </div>
+            </div>
+
+            <button onclick="saveContactAndSocialSettings()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold px-5 py-2 rounded-xl text-xs shadow">
+              ঠিকনা আৰু লিংকসমূহ সংৰক্ষণ কৰক
+            </button>
+          </div>
+
+          <!-- ব্যানাৰ, QR আৰু গোপন পাছৱৰ্ড ছেটিংছ -->
+          <div class="bg-white p-5 rounded-3xl border shadow-sm space-y-4">
+            <h3 class="font-black text-sm text-slate-800 border-b pb-2 flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-indigo-600"></i> সাধাৰণ ছেটিংছ আৰু গোপন পাছৱৰ্ড সলনি
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div class="border rounded-2xl p-3 bg-slate-50 flex items-center justify-between">
+                <div>
+                  <label class="block font-bold mb-1">UPI QR Code আপলোড কৰক:</label>
+                  <input type="file" accept="image/*" onchange="uploadQrFromGallery(this)" class="text-[10px] file:py-1 file:px-2 file:rounded file:border-0 file:bg-amber-600 file:text-white">
+                </div>
+                <img id="adminQrPreview" class="w-12 h-12 border rounded-lg bg-white object-contain shadow-sm ml-2">
+              </div>
+              <div class="border rounded-2xl p-3 bg-indigo-50 border-indigo-200">
+                <label class="block font-bold text-indigo-900 mb-1">এডমিন পাছৱৰ্ড সলনি কৰক:</label>
+                <div class="flex gap-2">
+                  <input type="password" id="newAdminPassInput" placeholder="নতুন পাছৱৰ্ড দিয়ক" class="border rounded-xl p-1.5 text-xs flex-grow outline-none bg-white">
+                  <button onclick="changeAdminPassword()" class="bg-indigo-700 text-white px-3 py-1.5 rounded-xl font-bold text-xs hover:bg-indigo-800">Update</button>
+                </div>
+              </div>
+            </div>
+            <div class="border rounded-2xl p-3 bg-slate-50">
+              <div class="flex justify-between items-center mb-2">
+                <label class="block font-bold text-xs text-slate-700">চাইদিং ব্যানাৰত ফটো যোগ কৰক:</label>
+                <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded-xl text-xs font-bold flex items-center gap-1 shadow">
+                  <i class="fa-solid fa-plus"></i> ফটো বাছক
+                  <input type="file" accept="image/*" onchange="addBannerFromGallery(this)" class="hidden">
+                </label>
+              </div>
+              <div id="adminBannersList" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
+            </div>
+          </div>
+
+          <!-- আবেদন পৰীক্ষা আৰু অনুমোদন টেবুল -->
+          <div class="bg-white rounded-3xl border shadow-sm overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center bg-slate-50">
+              <h3 class="font-black text-sm text-slate-800">আবেদন আৰু মাচুল পৰীক্ষা কৰক</h3>
+              <button onclick="exportToCSV()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-700 shadow">
+                <i class="fa-solid fa-file-excel mr-1"></i> Excel ডাউনল'ড
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead class="bg-slate-100 text-slate-600 font-bold uppercase border-b">
+                  <tr>
+                    <th class="p-3">আইডি ও ছাত্ৰ</th>
+                    <th class="p-3">শ্ৰেণী ও বিদ্যালয়</th>
+                    <th class="p-3">মাচুল প্ৰমাণ</th>
+                    <th class="p-3">অংকণৰ ছবি</th>
+                    <th class="p-3">ষ্টেটাছ</th>
+                    <th class="p-3 text-center">অনুমোদন (Action)</th>
+                  </tr>
+                </thead>
+                <tbody id="adminTableBody" class="divide-y text-slate-700"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= ৫. কাৰ্যালয়ৰ ঠিকনা আৰু ছ’চিয়েল মিডিয়া FOOTER ================= -->
+  <footer class="mt-12 bg-slate-900 text-slate-300 pt-8 pb-24 sm:pb-8 border-t-4 border-indigo-600">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pb-6 border-b border-slate-800">
+        
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <img id="footerLogo" src="" class="w-9 h-9 rounded-xl object-cover bg-white p-0.5">
+            <h4 class="font-black text-white text-sm sm:text-base tracking-wide">NE GLOBAL FOUNDATION</h4>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            All Assam Art Competition 2026 — অসমৰ প্ৰতিভাশালী ছাত্ৰ-ছাত্ৰীসকলৰ সুপ্ত কলা-প্ৰতিভাক বিকাশ কৰাৰ এক অনন্য মঞ্চ।
+          </p>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <h5 class="font-bold text-white uppercase tracking-wider text-xs border-b border-slate-800 pb-1">
+            <i class="fa-solid fa-location-dot text-amber-500 mr-1.5"></i> কাৰ্যালয়ৰ ঠিকনা
+          </h5>
+          <p id="footerAddress" class="text-slate-400 whitespace-pre-line leading-relaxed">
+            গুৱাহাটী, অসম, পিন - ৭৮১০০১
+          </p>
+          <div class="pt-1">
+            <span class="text-slate-400">যোগাযোগ / WhatsApp:</span><br>
+            <a id="footerPhoneLink" href="tel:8133073604" class="text-amber-400 font-bold hover:underline">
+              <i class="fa-solid fa-phone mr-1"></i> <span id="footerPhone">8133073604</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <h5 class="font-bold text-white uppercase tracking-wider text-xs border-b border-slate-800 pb-1">
+            <i class="fa-solid fa-share-nodes text-indigo-400 mr-1.5"></i> আমাৰ লগত সংযুক্ত হওক
+          </h5>
+          <p class="text-[11px] text-slate-400">নতুন তথ্য আৰু ফলাফলৰ আপডেট পাবলৈ আমাৰ ফেচবুক আৰু ইউটিউব চাব পাৰে:</p>
+          
+          <div class="flex items-center gap-3 pt-1">
+            <a id="footerFbBtn" href="https://facebook.com" target="_blank" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl font-bold transition shadow">
+              <i class="fa-brands fa-facebook text-base"></i>
+              <span>Facebook</span>
+            </a>
+
+            <a id="footerYtBtn" href="https://youtube.com" target="_blank" class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-3.5 py-2 rounded-xl font-bold transition shadow">
+              <i class="fa-brands fa-youtube text-base"></i>
+              <span>YouTube</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-4 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-500 gap-2">
+        <p>© 2026 NE GLOBAL FOUNDATION. All Rights Reserved.</p>
+        <p class="text-indigo-400 font-semibold">All Assam Art Competition - 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= ৬. ম’বাইল বটম বাৰ ================= -->
+  <div class="sm:hidden fixed bottom-3 left-4 right-4 z-40 bg-white/95 backdrop-blur-md border border-indigo-100 rounded-3xl p-1.5 shadow-2xl flex justify-around items-center">
+    <button onclick="switchTab('apply')" id="mbBtn_apply" class="flex flex-col items-center py-1 px-3 rounded-2xl text-indigo-700 font-bold text-[10px]">
+      <span class="text-base">🎨</span>
+      <span>আবেদন</span>
+    </button>
+    <button onclick="switchTab('gallery')" id="mbBtn_gallery" class="flex flex-col items-center py-1 px-3 rounded-2xl text-slate-500 font-bold text-[10px]">
+      <span class="text-base">🖼️</span>
+      <span>গেলেৰী</span>
+    </button>
+    <button onclick="switchTab('winners')" id="mbBtn_winners" class="flex flex-col items-center py-1 px-3 rounded-2xl text-slate-500 font-bold text-[10px]">
+      <span class="text-base">🏆</span>
+      <span>বিজয়ী</span>
+    </button>
+    <button onclick="switchTab('cert')" id="mbBtn_cert" class="flex flex-col items-center py-1 px-3 rounded-2xl text-slate-500 font-bold text-[10px]">
+      <span class="text-base">📜</span>
+      <span>চাৰ্টিফিকেট</span>
+    </button>
+  </div>
+
+  <!-- ================= ৭. ধন্যবাদ বাৰ্তা ম’ডেল ================= -->
+  <div id="thankYouModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center shadow-2xl border border-slate-100">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto text-3xl mb-3 shadow-inner">🎉</div>
+      <h3 class="text-xl font-black text-slate-800">অশেষ ধন্যবাদ!</h3>
+      <p class="text-xs text-indigo-700 font-bold mt-1">তোমাৰ আবেদন সফলতাৰে গৃহীত হৈছে।</p>
+      
+      <div class="bg-slate-50 border rounded-2xl p-4 my-4 text-left text-xs space-y-1.5">
+        <p><span class="text-slate-500 font-semibold">পঞ্জীয়ন নম্বৰ:</span> <b id="modalRegId" class="text-indigo-700 font-mono text-sm"></b></p>
+        <p><span class="text-slate-500 font-semibold">ছাত্ৰৰ নাম:</span> <b id="modalStudentName" class="text-slate-800"></b></p>
+        <p><span class="text-slate-500 font-semibold">শ্ৰেণী:</span> <b id="modalStudentClass" class="text-slate-800"></b></p>
+        <p><span class="text-slate-500 font-semibold">মাচুল স্থিতি:</span> <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold text-[10px]">পৰীক্ষাৰ বাবে অপেক্ষমাণ</span></p>
+      </div>
+
+      <div class="space-y-2">
+        <button id="modalWhatsAppBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl text-xs shadow flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp-ত এডমিনক জাননী পঠিয়াওক
+        </button>
+        <button onclick="closeThankYouModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-2xl text-xs">
+          বন্ধ কৰক (Close)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ৮. জাভাস্ক্রিপ্ট লজিক ================= -->
+  <script>
+    const DEFAULT_SLIDES = [
+      "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1000&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=1000&auto=format&fit=crop&q=80"
+    ];
+
+    let appSettings = JSON.parse(localStorage.getItem('art_modern_settings_v6')) || {
+      logo: "https://api.dicebear.com/7.x/shapes/svg?seed=NEGlobal&backgroundColor=4f46e5",
+      qr: "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=8133073604@upi&pn=NE_GLOBAL_FOUNDATION&am=150",
+      signature: "", 
+      stamp: "",     
+      banners: DEFAULT_SLIDES,
+      notice: "• ১ম শ্ৰেণীৰ পৰা ১০ম শ্ৰেণীলৈ। মাচুল: ₹১৫০ টকা। পেমেণ্ট কৰাৰ পাছত কেৱল Screenshot আপলোড কৰিলেই হ'ব। এডমিনে পৰীক্ষা কৰি Approve কৰাৰ পিছত চাৰ্টিফিকেট ডাউনল'ড কৰিব পাৰিব আৰু ছবিখন গেলেৰীত দেখা যাব।",
+      address: "গুৱাহাটী, অসম, পিন - ৭৮১০০১ (Guwahati, Assam - 781001)",
+      contactPhone: "8133073604",
+      facebookUrl: "https://facebook.com",
+      youtubeUrl: "https://youtube.com",
+      
+      // প্ৰমাণপত্ৰৰ কাস্টমাইজ লিখনিসমূহ (Customizable Certificate Content)
+      certOrg: "NE GLOBAL FOUNDATION",
+      certSub: "ALL ASSAM ART COMPETITION - 2026",
+      certTitle: "CERTIFICATE OF PARTICIPATION",
+      certPresentation: "This is proudly presented to",
+      certBody: "for active and enthusiastic participation in the state-level online art competition. We appreciate the artistic excellence demonstrated in this competition.",
+      certDate: "Date: 2026",
+      certSignatory: "Authorized Signatory\nNE GLOBAL FOUNDATION"
+    };
+
+    let winnersData = JSON.parse(localStorage.getItem('art_winners_data')) || {
+      lower: { p1: null, p2: null, p3: null },
+      middle: { p1: null, p2: null, p3: null },
+      upper: { p1: null, p2: null, p3: null }
+    };
+
+    let applicants = JSON.parse(localStorage.getItem('art_modern_applicants')) || [];
+
+    let currentSlide = 0;
+
+    function initSlider() {
+      const container = document.getElementById('sliderContainer');
+      const dots = document.getElementById('sliderDots');
+      container.innerHTML = '';
+      dots.innerHTML = '';
+
+      appSettings.banners.forEach((url, i) => {
+        container.innerHTML += `<div class="min-w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('${url}')"></div>`;
+        dots.innerHTML += `<div class="w-2 h-2 rounded-full ${i === 0 ? 'bg-white' : 'bg-white/50'} transition-all"></div>`;
+      });
+      updateSlider();
+    }
+
+    function updateSlider() {
+      const container = document.getElementById('sliderContainer');
+      if (appSettings.banners.length > 0) {
+        container.style.transform = `translateX(-${currentSlide * 100}%)`;
+        const dots = document.getElementById('sliderDots').children;
+        for (let i = 0; i < dots.length; i++) {
+          dots[i].className = `w-2 h-2 rounded-full ${i === currentSlide ? 'bg-amber-400 w-4' : 'bg-white/50'} transition-all`;
+        }
+      }
+    }
+
+    function nextSlide() {
+      if (appSettings.banners.length > 0) {
+        currentSlide = (currentSlide + 1) % appSettings.banners.length;
+        updateSlider();
+      }
+    }
+    function prevSlide() {
+      if (appSettings.banners.length > 0) {
+        currentSlide = (currentSlide - 1 + appSettings.banners.length) % appSettings.banners.length;
+        updateSlider();
+      }
+    }
+    setInterval(nextSlide, 4500);
+
+    function switchTab(tab) {
+      const allTabs = ['apply', 'gallery', 'winners', 'cert', 'admin'];
+      allTabs.forEach(t => {
+        const sec = document.getElementById(`section_${t}`);
+        if(sec) sec.classList.add('hidden');
+        
+        const mainBtn = document.getElementById(`mainBtn_${t}`);
+        if(mainBtn) mainBtn.classList.remove('active-tab');
+
+        const mbBtn = document.getElementById(`mbBtn_${t}`);
+        if(mbBtn) mbBtn.className = "flex flex-col items-center py-1 px-3 rounded-2xl text-slate-500 font-bold text-[10px]";
+      });
+
+      const activeSec = document.getElementById(`section_${tab}`);
+      if(activeSec) activeSec.classList.remove('hidden');
+
+      const activeMainBtn = document.getElementById(`mainBtn_${tab}`);
+      if(activeMainBtn) activeMainBtn.classList.add('active-tab');
+
+      const activeMbBtn = document.getElementById(`mbBtn_${tab}`);
+      if(activeMbBtn) activeMbBtn.className = "flex flex-col items-center py-1 px-3 rounded-2xl text-indigo-700 font-extrabold text-[10px] bg-indigo-50";
+
+      if(tab === 'gallery') renderGallery();
+      if(tab === 'winners') renderWinnersGrid();
+
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    // প্ৰমাণপত্ৰৰ সকলো লিখনি সংৰক্ষণ কৰা ফাংচন
+    function saveCertificateContentSettings() {
+      appSettings.certOrg = document.getElementById('certInputOrg').value.trim();
+      appSettings.certSub = document.getElementById('certInputSub').value.trim();
+      appSettings.certTitle = document.getElementById('certInputTitle').value.trim();
+      appSettings.certPresentation = document.getElementById('certInputPres').value.trim();
+      appSettings.certBody = document.getElementById('certInputBody').value.trim();
+      appSettings.certDate = document.getElementById('certInputDate').value.trim();
+      appSettings.certSignatory = document.getElementById('certInputSignText').value.trim();
+
+      saveSettings();
+      alert("প্ৰমাণপত্ৰৰ সকলো লিখনি আৰু তথ্য সফলতাৰে সংৰক্ষণ হ'ল!");
+    }
+
+    function saveContactAndSocialSettings() {
+      appSettings.address = document.getElementById('adminAddressInput').value.trim();
+      appSettings.contactPhone = document.getElementById('adminContactPhoneInput').value.trim();
+      appSettings.facebookUrl = document.getElementById('adminFbInput').value.trim();
+      appSettings.youtubeUrl = document.getElementById('adminYtInput').value.trim();
+      
+      saveSettings();
+      alert("কাৰ্যালয়ৰ ঠিকনা, যোগাযোগ আৰু ছ’চিয়েল মিডিয়া লিংক সংৰক্ষণ হ'ল!");
+    }
+
+    function uploadLogoFromGallery(input) {
+      readFile(input, (res) => {
+        appSettings.logo = res;
+        saveSettings();
+        alert("Logo সফলতাৰে আপলোড হ'ল!");
+      });
+    }
+
+    function uploadSignFromGallery(input) {
+      readFile(input, (res) => {
+        appSettings.signature = res;
+        saveSettings();
+        alert("ডিজিটেল চহী আপলোড হ'ল!");
+      });
+    }
+
+    function uploadStampFromGallery(input) {
+      readFile(input, (res) => {
+        appSettings.stamp = res;
+        saveSettings();
+        alert("অফিচিয়েল ষ্টাম্প আপলোড হ'ল!");
+      });
+    }
+
+    function uploadQrFromGallery(input) {
+      readFile(input, (res) => {
+        appSettings.qr = res;
+        saveSettings();
+        alert("UPI QR Code আপলোড হ'ল!");
+      });
+    }
+
+    function addBannerFromGallery(input) {
+      readFile(input, (res) => {
+        appSettings.banners.push(res);
+        saveSettings();
+        initSlider();
+        alert("স্লাইডাৰ ফটো যোগ হ'ল!");
+      });
+    }
+
+    function deleteBanner(index) {
+      if(confirm("মচি পেলাব বিচাৰে নেকি?")) {
+        appSettings.banners.splice(index, 1);
+        saveSettings();
+        initSlider();
+      }
+    }
+
+    function saveSettings() {
+      localStorage.setItem('art_modern_settings_v6', JSON.stringify(appSettings));
+      refreshUI();
+    }
+
+    function readFile(input, cb) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => cb(e.target.result);
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function changeAdminPassword() {
+      const newPass = document.getElementById('newAdminPassInput').value.trim();
+      if(newPass.length < 4) {
+        alert("পাছৱৰ্ড কমেও ৪ টা সংখ্যাৰ হ'ব লাগিব!");
+        return;
+      }
+      localStorage.setItem('art_secure_admin_pass', newPass);
+      document.getElementById('newAdminPassInput').value = '';
+      alert("এডমিন পাছৱৰ্ড সফলতাৰে সলনি হ'ল!");
+    }
+
+    async function saveWinnerData() {
+      const branch = document.getElementById('winBranch').value;
+      const rank = document.getElementById('winRank').value;
+      const name = document.getElementById('winName').value.trim();
+      const school = document.getElementById('winSchool').value.trim();
+      const photoFile = document.getElementById('winPhotoFile').files[0];
+
+      if(!name || !school) {
+        alert("অনুগ্ৰহ কৰি বিজয়ীৰ নাম আৰু বিদ্যালয় দিয়ক!");
+        return;
+      }
+
+      let photoBase64 = "";
+      if(photoFile) {
+        photoBase64 = await readFileAsBase64(photoFile);
+      } else {
+        photoBase64 = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400";
+      }
+
+      winnersData[branch][rank] = { name, school, photo: photoBase64 };
+      localStorage.setItem('art_winners_data', JSON.stringify(winnersData));
+      renderWinnersGrid();
+      alert("বিজয়ী প্ৰতিযোগীৰ তথ্য আৰু ফটো সফলতাৰে সংৰক্ষণ হ'ল!");
+      document.getElementById('winName').value = '';
+      document.getElementById('winSchool').value = '';
+      document.getElementById('winPhotoFile').value = '';
+    }
+
+    function renderWinnersGrid() {
+      const branches = ['lower', 'middle', 'upper'];
+      const rankLabels = {
+        p1: { title: "১ম স্থান (1st Place)", badge: "🥇 GOLD", frameClass: "frame-gold", badgeColor: "bg-amber-500 text-white" },
+        p2: { title: "২য় স্থান (2nd Place)", badge: "🥈 SILVER", frameClass: "frame-silver", badgeColor: "bg-slate-400 text-white" },
+        p3: { title: "৩য় স্থান (3rd Place)", badge: "🥉 BRONZE", frameClass: "frame-bronze", badgeColor: "bg-amber-700 text-white" }
+      };
+
+      branches.forEach(b => {
+        const grid = document.getElementById(`winnersGrid_${b}`);
+        grid.innerHTML = '';
+        ['p1', 'p2', 'p3'].forEach(r => {
+          const w = winnersData[b][r];
+          const info = rankLabels[r];
+
+          if(w && w.name) {
+            grid.innerHTML += `
+              <div class="${info.frameClass} rounded-3xl p-5 text-center relative overflow-hidden transition transform hover:-translate-y-1">
+                <span class="absolute top-3 right-3 ${info.badgeColor} text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm">
+                  ${info.badge}
+                </span>
+                <div class="w-24 h-24 mx-auto rounded-full p-1 border-2 border-white/80 shadow-md mb-3 bg-white">
+                  <img src="${w.photo}" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h4 class="font-black text-sm text-slate-800">${w.name}</h4>
+                <p class="text-[11px] text-slate-600 font-semibold">${w.school}</p>
+                <div class="mt-2 text-xs font-black text-indigo-900 border-t border-slate-300/40 pt-1.5">
+                  ${info.title}
+                </div>
+              </div>
+            `;
+          } else {
+            grid.innerHTML += `
+              <div class="border-2 border-dashed border-slate-300 rounded-3xl p-6 text-center bg-white/70">
+                <span class="inline-block ${info.badgeColor} text-[9px] font-bold px-2 py-0.5 rounded-full mb-2">${info.badge}</span>
+                <div class="w-14 h-14 mx-auto rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400 mb-2">
+                  🏆
+                </div>
+                <p class="text-xs font-bold text-slate-500">${info.title}</p>
+                <p class="text-[10px] text-slate-400 mt-1">শীঘ্ৰেই ঘোষণা কৰা হ'ব</p>
+              </div>
+            `;
+          }
+        });
+      });
+    }
+
+    function refreshUI() {
+      document.getElementById('appLogo').src = appSettings.logo;
+      document.getElementById('footerLogo').src = appSettings.logo;
+      document.getElementById('displayQr').src = appSettings.qr;
+      document.getElementById('displayNotice').innerText = appSettings.notice;
+
+      // Footer
+      document.getElementById('footerAddress').innerText = appSettings.address;
+      document.getElementById('footerPhone').innerText = appSettings.contactPhone;
+      document.getElementById('footerPhoneLink').href = `tel:${appSettings.contactPhone}`;
+      document.getElementById('footerFbBtn').href = appSettings.facebookUrl;
+      document.getElementById('footerYtBtn').href = appSettings.youtubeUrl;
+
+      // Certificate Studio Inputs
+      document.getElementById('certInputOrg').value = appSettings.certOrg || "NE GLOBAL FOUNDATION";
+      document.getElementById('certInputSub').value = appSettings.certSub || "ALL ASSAM ART COMPETITION - 2026";
+      document.getElementById('certInputTitle').value = appSettings.certTitle || "CERTIFICATE OF PARTICIPATION";
+      document.getElementById('certInputPres').value = appSettings.certPresentation || "This is proudly presented to";
+      document.getElementById('certInputBody').value = appSettings.certBody || "for active and enthusiastic participation in the state-level online art competition. We appreciate the artistic excellence demonstrated in this competition.";
+      document.getElementById('certInputDate').value = appSettings.certDate || "Date: 2026";
+      document.getElementById('certInputSignText').value = appSettings.certSignatory || "Authorized Signatory, NE GLOBAL FOUNDATION";
+
+      // Admin Address & Social Inputs
+      document.getElementById('adminAddressInput').value = appSettings.address;
+      document.getElementById('adminContactPhoneInput').value = appSettings.contactPhone;
+      document.getElementById('adminFbInput').value = appSettings.facebookUrl;
+      document.getElementById('adminYtInput').value = appSettings.youtubeUrl;
+
+      document.getElementById('adminLogoPreview').src = appSettings.logo;
+      document.getElementById('adminQrPreview').src = appSettings.qr;
+      
+      if(appSettings.signature) document.getElementById('adminSignPreview').src = appSettings.signature;
+      if(appSettings.stamp) document.getElementById('adminStampPreview').src = appSettings.stamp;
+
+      const bannerList = document.getElementById('adminBannersList');
+      bannerList.innerHTML = '';
+      appSettings.banners.forEach((b, idx) => {
+        bannerList.innerHTML += `
+          <div class="relative group rounded-xl overflow-hidden border bg-black h-14 shadow-sm">
+            <img src="${b}" class="w-full h-full object-cover">
+            <button onclick="deleteBanner(${idx})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px]">✕</button>
+          </div>
+        `;
+      });
+
+      document.getElementById('statTotal').innerText = applicants.length;
+      document.getElementById('statPending').innerText = applicants.filter(a => a.status === 'Pending').length;
+      document.getElementById('statApproved').innerText = applicants.filter(a => a.status === 'Approved').length;
+      document.getElementById('statFee').innerText = `₹${applicants.length * 150}`;
+
+      renderAdminTable();
+      renderGallery();
+      renderWinnersGrid();
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = '';
+      const approvedList = applicants.filter(a => a.status === 'Approved');
+
+      if(approvedList.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-slate-400">এতিয়ালৈকে কোনো অনুমোদিত ছবি প্ৰদৰ্শিত হোৱা নাই।</div>`;
+        return;
+      }
+
+      approvedList.forEach(a => {
+        grid.innerHTML += `
+          <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="h-48 bg-slate-100 overflow-hidden relative">
+              <img src="${a.drawingUrl}" class="w-full h-full object-cover">
+              <span class="absolute top-2 right-2 bg-emerald-600 text-white text-[10px] px-2.5 py-0.5 rounded-full font-bold shadow">✓ Verified</span>
+            </div>
+            <div class="p-3.5">
+              <h4 class="font-bold text-sm text-slate-800">${a.name}</h4>
+              <p class="text-[11px] text-slate-500">${a.school}</p>
+              <div class="mt-2 pt-2 border-t flex justify-between items-center text-[11px] font-semibold text-indigo-700">
+                <span>${a.cls}</span>
+                <span class="text-slate-400">ID: ${a.id}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function renderAdminTable() {
+      const tbody = document.getElementById('adminTableBody');
+      tbody.innerHTML = '';
+
+      applicants.forEach(a => {
+        const isApproved = a.status === 'Approved';
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50">
+            <td class="p-3 font-semibold">${a.name}<br><span class="text-[10px] text-slate-400">${a.id}</span></td>
+            <td class="p-3">${a.cls}<br><span class="text-[10px] text-slate-500">${a.school}</span></td>
+            <td class="p-3">
+              ${a.paymentSsUrl ? `<a href="${a.paymentSsUrl}" target="_blank" class="text-amber-600 font-bold text-xs flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg border border-amber-200 inline-block"><i class="fa-solid fa-receipt"></i> ৰচিদ চাওক</a>` : `<span class="text-slate-400 text-[10px]">নাই</span>`}
+            </td>
+            <td class="p-3">
+              <a href="${a.drawingUrl}" target="_blank" class="text-indigo-600 font-bold text-xs flex items-center gap-1">ছবি চাওক ↗</a>
+            </td>
+            <td class="p-3">
+              <span class="text-[10px] font-black px-2 py-0.5 rounded-full ${isApproved ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${a.status}</span>
+            </td>
+            <td class="p-3 text-center space-x-1">
+              ${!isApproved ? `
+                <button onclick="approveApplicant('${a.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-xs font-bold shadow">অনুমোদন দিয়ক ✓</button>
+              ` : `
+                <button onclick="rejectApplicant('${a.id}')" class="bg-red-50 text-red-600 px-2 py-1 rounded-lg text-xs font-semibold hover:bg-red-100">বাতিল কৰক</button>
+              `}
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function approveApplicant(id) {
+      const target = applicants.find(a => a.id === id);
+      if(target) {
+        target.status = 'Approved';
+        localStorage.setItem('art_modern_applicants', JSON.stringify(applicants));
+        refreshUI();
+        alert(`${target.name}-ৰ আবেদন অনুমোদন কৰা হ'ল!`);
+      }
+    }
+
+    function rejectApplicant(id) {
+      const target = applicants.find(a => a.id === id);
+      if(target) {
+        target.status = 'Pending';
+        localStorage.setItem('art_modern_applicants', JSON.stringify(applicants));
+        refreshUI();
+      }
+    }
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function submitRegistration() {
+      const name = document.getElementById('std_name').value.trim();
+      const school = document.getElementById('std_school').value.trim();
+      const cls = document.getElementById('std_class').value;
+      const roll = document.getElementById('std_roll').value.trim();
+      const guardian = document.getElementById('std_guardian').value.trim();
+      const address = document.getElementById('std_address').value.trim();
+      const phone = document.getElementById('std_phone').value.trim();
+      const whatsapp = document.getElementById('std_whatsapp').value.trim();
+      
+      const drawingFile = document.getElementById('std_drawing').files[0];
+      const paymentSsFile = document.getElementById('std_payment_ss').files[0];
+
+      if(!drawingFile || !paymentSsFile) {
+        alert("অনুগ্ৰহ কৰি অংকণ কৰা ছবি আৰু পেমেণ্টৰ Screenshot আপলোড কৰক!");
+        return;
+      }
+
+      try {
+        const [drawingBase64, paymentSsBase64] = await Promise.all([
+          readFileAsBase64(drawingFile),
+          readFileAsBase64(paymentSsFile)
+        ]);
+
+        const regId = "NGC-2026-" + Math.floor(1000 + Math.random() * 9000);
+
+        const newEntry = {
+          id: regId, name, school, cls, roll, guardian, address, phone, whatsapp,
+          drawingUrl: drawingBase64,
+          paymentSsUrl: paymentSsBase64,
+          status: "Pending"
+        };
+
+        applicants.unshift(newEntry);
+        localStorage.setItem('art_modern_applicants', JSON.stringify(applicants));
+        refreshUI();
+
+        showThankYouModal(regId, name, cls, school, phone, whatsapp);
+        document.getElementById('regForm').reset();
+      } catch (err) {
+        alert("ফটো লোড কৰাত সমস্যা হৈছে!");
+      }
+    }
+
+    function showThankYouModal(regId, name, cls, school, phone, whatsapp) {
+      document.getElementById('modalRegId').innerText = regId;
+      document.getElementById('modalStudentName').innerText = name;
+      document.getElementById('modalStudentClass').innerText = `${cls} (${school})`;
+
+      const adminMsg = `*NE GLOBAL FOUNDATION - নতুন আৰ্ট আবেদন!*\nReg ID: ${regId}\nনাম: ${name}\nশ্ৰেণী: ${cls}\nবিদ্যালয়: ${school}\nফোন: ${phone}\nমাচুল: ₹150 (Screenshot সংলগ্ন)`;
+      
+      document.getElementById('modalWhatsAppBtn').onclick = function() {
+        window.open(`https://wa.me/918133073604?text=${encodeURIComponent(adminMsg)}`, '_blank');
+      };
+
+      document.getElementById('thankYouModal').classList.remove('hidden');
+    }
+
+    function closeThankYouModal() {
+      document.getElementById('thankYouModal').classList.add('hidden');
+    }
+
+    // =========================================================================
+    // ৰাজকীয় আৰু আকৰ্ষণীয় A4 LANDSCAPE প্ৰমাণপত্ৰ নিৰ্মাণ লজিক (ROYAL CERTIFICATE)
+    // =========================================================================
+    function generateRoyalPDF(participantData) {
+      const { jsPDF } = window.jspdf;
+      // Standard A4 Landscape: 297mm (Width) x 210mm (Height)
+      const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+
+      // ১. পেক্ষাপটৰ পাতল ক্ৰীম/আইভৰি বৰ্ণ (Ivory Parchment Background)
+      doc.setFillColor(255, 254, 248);
+      doc.rect(0, 0, 297, 210, "F");
+
+      // ২. ৰয়েল বহুস্তৰীয় অলংকৰণ বৰ্ডাৰ (Ornate Royal Borders)
+      // ২.১ বাহিৰৰ ডাঠ ৰয়েল নেভী বৰ্ডাৰ
+      doc.setLineWidth(4);
+      doc.setDrawColor(26, 35, 126); // Deep Royal Navy
+      doc.rect(7, 7, 283, 196);
+
+      // ২.২ সোঁমাজৰ স্বৰ্ণালী বৰ্ডাৰ (Gold Border)
+      doc.setLineWidth(1.5);
+      doc.setDrawColor(217, 119, 6); // Rich Gold
+      doc.rect(11, 11, 275, 188);
+
+      // ২.৩ ভিতৰৰ সূক্ষ্ম সোনালী লাইন (Inner Fine Gold Border)
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(180, 83, 9);
+      doc.rect(13, 13, 271, 184);
+
+      // ৩. চাৰি চুকৰ ৰাজকীয় নক্সা (Corner Geometric Embellishments)
+      const corners = [[13, 13], [284, 13], [13, 197], [284, 197]];
+      corners.forEach(([cx, cy]) => {
+        doc.setFillColor(217, 119, 6);
+        doc.circle(cx, cy, 2.5, "F");
+        doc.setFillColor(26, 35, 126);
+        doc.circle(cx, cy, 1.2, "F");
+      });
+
+      // ৪. ল'গ' বহুওৱা (Logo at Top-Left)
+      if(appSettings.logo && appSettings.logo.startsWith('data:image')) {
+        try { doc.addImage(appSettings.logo, 'PNG', 18, 18, 24, 24); } catch(e){}
+      }
+
+      // ৫. হেডাৰ টেক্সট (Custom Organization Name)
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(26);
+      doc.setTextColor(26, 35, 126); // Royal Navy
+      const orgText = appSettings.certOrg || "NE GLOBAL FOUNDATION";
+      doc.text(orgText.toUpperCase(), 148.5, 30, { align: "center" });
+
+      // ৬. প্ৰতিযোগিতাৰ শিৰোনাম (Event Subtitle)
+      doc.setFontSize(13);
+      doc.setTextColor(180, 83, 9); // Amber Gold
+      const subText = appSettings.certSub || "ALL ASSAM ART COMPETITION - 2026";
+      doc.text(subText.toUpperCase(), 148.5, 38, { align: "center" });
+
+      // ৭. অলংকাৰিক সোণালী ৰেখা (Decorative Divider)
+      doc.setDrawColor(217, 119, 6);
+      doc.setLineWidth(0.8);
+      doc.line(75, 42, 222, 42);
+      doc.setFillColor(217, 119, 6);
+      doc.circle(148.5, 42, 1.8, "F");
+
+      // ৮. প্ৰমাণপত্ৰৰ মূল শিৰোনাম (Certificate Title)
+      doc.setFontSize(22);
+      doc.setTextColor(194, 65, 12); // Rust/Gold
+      const certTitle = appSettings.certTitle || "CERTIFICATE OF PARTICIPATION";
+      doc.text(certTitle.toUpperCase(), 148.5, 58, { align: "center" });
+
+      // ৯. উপস্থাপন বাক্য (Presentation Line)
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.setTextColor(71, 85, 105);
+      const presText = appSettings.certPresentation || "This certificate is proudly awarded to";
+      doc.text(presText, 148.5, 72, { align: "center" });
+
+      // ১০. ছাত্ৰ/ছাত্ৰীৰ নাম (Student Name in Grand Bold Font)
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(26);
+      doc.setTextColor(15, 23, 42); // Slate 900
+      doc.text(participantData.name.toUpperCase(), 148.5, 88, { align: "center" });
+
+      // নামৰ তলত সোণালী অলংকাৰিক ৰেখা
+      const nameWidth = doc.getTextWidth(participantData.name.toUpperCase());
+      const underlineStart = Math.max(80, 148.5 - (nameWidth / 2) - 8);
+      const underlineEnd = Math.min(217, 148.5 + (nameWidth / 2) + 8);
+      doc.setDrawColor(217, 119, 6);
+      doc.setLineWidth(1);
+      doc.line(underlineStart, 92, underlineEnd, 92);
+
+      // ১১. বিদ্যালয় আৰু শ্ৰেণীৰ শাৰী
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.setTextColor(30, 41, 59);
+      const schoolLine = `of ${participantData.school} (${participantData.cls})`;
+      doc.text(schoolLine, 148.5, 102, { align: "center" });
+
+      // ১২. মূল প্ৰশংসা বৰ্ণনা (Custom Body Text with Multi-line Wrapping)
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.setTextColor(71, 85, 105);
+      const bodyText = appSettings.certBody || "for active and enthusiastic participation in the state-level online art competition. We appreciate the artistic excellence demonstrated in this competition.";
+      const splitBody = doc.splitTextToSize(bodyText, 210);
+      doc.text(splitBody, 148.5, 114, { align: "center" });
+
+      // ১৩. তলৰ সোঁফালে ডিজিটেল চহী (Digital Signature)
+      if(appSettings.signature && appSettings.signature.startsWith('data:image')) {
+        try { doc.addImage(appSettings.signature, 'PNG', 222, 138, 38, 17); } catch(e){}
+      }
+      doc.setDrawColor(148, 163, 184);
+      doc.setLineWidth(0.5);
+      doc.line(210, 158, 270, 158); // Signature line
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.setTextColor(30, 41, 59);
+      const signText = appSettings.certSignatory || "Authorized Signatory\nNE GLOBAL FOUNDATION";
+      const signSplit = doc.splitTextToSize(signText, 65);
+      doc.text(signSplit, 240, 163, { align: "center" });
+
+      // ১৪. সোঁমাজত অফিচিয়েল ষ্টাম্প (Official Seal / Stamp)
+      if(appSettings.stamp && appSettings.stamp.startsWith('data:image')) {
+        try { doc.addImage(appSettings.stamp, 'PNG', 133, 136, 32, 32); } catch(e){}
+      }
+
+      // ১৫. বাওঁফালে তাৰিখ আৰু ভেৰিফিকেচন নম্বৰ (Date & Verification ID)
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(51, 65, 85);
+      const dateVal = appSettings.certDate || "Date: 2026";
+      doc.text(dateVal, 22, 155);
+
+      doc.setFontSize(9);
+      doc.setTextColor(100, 116, 139);
+      doc.text(`Certificate ID: ${participantData.id}`, 22, 162);
+      doc.text(`Official Online State Level Art Event`, 22, 167);
+
+      // ১৬. PDF ডাউনল'ড
+      doc.save(`Certificate_${participantData.name.replace(/\s+/g, '_')}.pdf`);
+    }
+
+    // ছাত্ৰ-ছাত্ৰীৰ বাবে প্ৰমাণপত্ৰ ডাউনল’ড লজিক
+    function downloadStudentCert() {
+      const phone = document.getElementById('certPhoneInput').value.trim();
+      const msgBox = document.getElementById('certStatusMsg');
+
+      if(!phone) {
+        alert("অনুগ্ৰহ কৰি পঞ্জীয়নভুক্ত ফোন নম্বৰটো দিয়ক!");
+        return;
+      }
+
+      const found = applicants.find(a => a.phone === phone);
+
+      if(!found) {
+        msgBox.className = "mt-4 text-xs font-bold text-red-600 block";
+        msgBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> এই ফোন নম্বৰৰ কোনো পঞ্জীয়ন পোৱা নগ'ল।`;
+        return;
+      }
+
+      if(found.status !== 'Approved') {
+        msgBox.className = "mt-4 text-xs font-bold text-amber-600 block bg-amber-50 p-3 rounded-2xl border border-amber-200";
+        msgBox.innerHTML = `<i class="fa-solid fa-clock"></i> নমস্কাৰ ${found.name}! তোমাৰ আবেদন আৰু পেমেণ্ট Screenshot এতিয়াও <b>ভেৰিফিকেচন (Pending)</b> হৈ আছে। এডমিনে অনুমতি দিয়াৰ পাছতহে প্ৰমাণপত্ৰ ডাউনলোড হ’ব।`;
+        return;
+      }
+
+      msgBox.className = "mt-4 text-xs font-bold text-emerald-600 block";
+      msgBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> অভিনন্দন ${found.name}! ৰাজকীয় প্ৰমাণপত্ৰ ডাউনল'ড হৈ আছে...`;
+
+      generateRoyalPDF(found);
+    }
+
+    // এডমিনে পৰীক্ষা কৰিবলৈ নমুনা প্ৰমাণপত্ৰ (Test Preview Certificate)
+    function previewSampleCertificate() {
+      const sample = {
+        name: "প্ৰদৰ্শনকাৰী ছাত্ৰ (SAMPLE STUDENT)",
+        school: "গুৱাহাটী জাতীয় বিদ্যালয় (SAMPLE SCHOOL)",
+        cls: "Class 6",
+        id: "NGC-SAMPLE-2026"
+      };
+      generateRoyalPDF(sample);
+    }
+
+    function verifyAdmin() {
+      const pass = document.getElementById('adminPass').value;
+      const currentSecurePass = localStorage.getItem('art_secure_admin_pass') || '8133073604';
+
+      if(pass === currentSecurePass) {
+        document.getElementById('adminLoginBox').classList.add('hidden');
+        document.getElementById('adminPanelArea').classList.remove('hidden');
+        document.getElementById('adminPass').value = '';
+      } else {
+        alert("ভুল পাছৱৰ্ড!");
+      }
+    }
+
+    function logoutAdmin() {
+      document.getElementById('adminPanelArea').classList.add('hidden');
+      document.getElementById('adminLoginBox').classList.remove('hidden');
+    }
+
+    function exportToCSV() {
+      let csv = "Reg_ID,Student_Name,Class,School,Phone,Status\n";
+      applicants.forEach(a => {
+        csv += `"${a.id}","${a.name}","${a.cls}","${a.school}","${a.phone}","${a.status}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `Art_Participants_2026.csv`;
+      link.click();
+    }
+
+    initSlider();
+    refreshUI();
+  </script>
+</body>
+</html>
